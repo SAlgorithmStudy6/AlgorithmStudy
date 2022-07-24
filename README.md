@@ -8,5 +8,5 @@
 - 폴더 경로 : 날짜(MM.DD)/사용자이름/문제
 
 ## Contents 
-- [07.21](https://github.com/SAlgorithmStudy6/StudyCodes/tree/main/07.21)
-- [07.25](https://github.com/SAlgorithmStudy6/StudyCodes/tree/main/07.25)
+- [07.21.목](https://github.com/SAlgorithmStudy6/StudyCodes/tree/main/07.21)
+- [07.25.월](https://github.com/SAlgorithmStudy6/StudyCodes/tree/main/07.25)
