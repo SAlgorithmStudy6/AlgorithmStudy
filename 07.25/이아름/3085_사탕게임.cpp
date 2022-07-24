@@ -7,12 +7,12 @@ using namespace std;
 
 int N, biggest = 0;
 vector<string> board;
-int px[] = { 0,-1,0,1 };
-int py[] = { -1,0,1,0 };
-void checkSame() { //¿¬¼ÓµÇ´Â °³¼ö ¼¼±â
+int px[] = {-1,0,1 };
+int py[] = { 0,1,0 };
+void checkSame() { //ì—°ì†ë˜ëŠ” ê°œìˆ˜ ì„¸ê¸°
 	for (int i = 0; i < N; i++) {
 		int count = 1;
-		for (int k = 1; k < N; k++) { // ÇàÈ®ÀÎ
+		for (int k = 1; k < N; k++) { // í–‰í™•ì¸
 			if (board[i][k - 1] == board[i][k]) {
 				count++;
 				biggest = max(count, biggest);
@@ -22,7 +22,7 @@ void checkSame() { //¿¬¼ÓµÇ´Â °³¼ö ¼¼±â
 			}
 		}
 		count = 1;
-		for (int k = 1; k < N; k++) { //¿­È®ÀÎ
+		for (int k = 1; k < N; k++) { //ì—´í™•ì¸
 			if (board[k-1][i] == board[k][i]) {
 				count++;
 				biggest = max(count, biggest);
@@ -35,18 +35,18 @@ void checkSame() { //¿¬¼ÓµÇ´Â °³¼ö ¼¼±â
 }
 
 int main() {
-	//ÀÔ·Â ½ÃÀÛ
+	//ì…ë ¥ ì‹œì‘
 	cin >> N;
 	for (int i = 0; i < N; i++) {
 		string str; cin >> str;
 		board.push_back(str);
 	}
 
-	//º» ÄÚµå ½ÃÀÛ
+	//ë³¸ ì½”ë“œ ì‹œì‘
 	for (int i = 0; i < N; i++) {
 		for (int k = 0; k < N; k++) {
 			int nextX, nextY;
-			for (int t = 0; t < 4; t++) {
+			for (int t = 0; t < 3; t++) {
 				nextX = i + px[t];
 				nextY = k + py[t];
 				if (0 <= nextX && nextX < N && 0 <= nextY && nextY < N) {
