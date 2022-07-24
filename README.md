@@ -1,5 +1,5 @@
 # StudyCodes
-<img src="https://user-images.githubusercontent.com/50359789/180629106-e4f83bf5-19c1-4dcd-a727-11bc5aa3bbcb.jpg" width="100%" height="450px" title="Study" alt="Study"></img>
+<img src="https://user-images.githubusercontent.com/50359789/180629106-e4f83bf5-19c1-4dcd-a727-11bc5aa3bbcb.jpg" width="80%" height="400px" title="Study" alt="Study"></img>
  study for Android Kotlin Application <br />
 - 일정 노션 : https://wealthy-perfume-4c7.notion.site/SSAFY-Moblie-8th-Study-3eee2886ef5d49b6bdb6b04fbb9da97f <br />
 
