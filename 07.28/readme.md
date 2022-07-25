@@ -1,3 +1,5 @@
+## 07.28 (목) 8시
+
 17086 아기 상어2 
 https://www.acmicpc.net/problem/17086  
 
