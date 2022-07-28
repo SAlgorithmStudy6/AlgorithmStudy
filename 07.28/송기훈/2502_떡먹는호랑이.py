@@ -7,7 +7,7 @@ a = 1
 
 # a = 1, b = 1부터 대입해서 무한 반복
 while a <= K:
-	for b in range(1, K):
+	for b in range(a, K):
 		arr[0] = a
 		arr[1] = b
 
