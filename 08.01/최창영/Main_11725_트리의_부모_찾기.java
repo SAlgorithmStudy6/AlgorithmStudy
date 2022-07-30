@@ -29,7 +29,6 @@ public class Main_11725_트리의_부모_찾기 {
 			list.get(y).add(x);
 		}
 
-		node[1] = 1;
 		BFS();
 		for(int i=2; i<N+1; i++) sb.append(node[i]).append('\n');
 

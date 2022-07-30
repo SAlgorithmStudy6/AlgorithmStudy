@@ -4,7 +4,6 @@ import java.io.*;
 public class Main_2606_바이러스_DFS {
 	static int arr[][];
 	static boolean visit[];
-	
 	static int N, M;
 	static int result = 0;
 	
@@ -30,19 +29,18 @@ public class Main_2606_바이러스_DFS {
 		
 		DFS(1);
 		
-		System.out.println(result);
-	}
+		System.out.print(result);
+	} // End of main
 	
 	static void DFS(int node) {
 		visit[node] = true;
 		
 		for(int i=1; i<N+1; i++) {
-			
 			if(arr[node][i] == 1 && visit[i] == false) {
 				DFS(i);
 				result++;
 			}
 		}
 		
-	}
-}
+	} // End of DFS
+} // End of Main class

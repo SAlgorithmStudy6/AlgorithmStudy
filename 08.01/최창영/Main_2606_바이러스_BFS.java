@@ -7,10 +7,8 @@ import java.io.*;
 // 1번 컴퓨터를 통해 웜 바이러스에 걸리게 되는 컴퓨터의 수를 첫째 줄에 출력한다.
 
 public class Main_2606_바이러스_BFS {
-	static Queue<Integer> que = new LinkedList<>();
 	static int arr[][];
 	static boolean visit[];
-	
 	static int N, M;
 	static int result = 0;
 	
@@ -41,7 +39,7 @@ public class Main_2606_바이러스_BFS {
 	
 	// k를 통해 갈 수 있는 곳을 모두 연결
 	private static void BFS() {
-		
+		Queue<Integer> que = new LinkedList<>();
 		que.offer(1);
 		visit[1] = true;
 		
@@ -61,6 +59,4 @@ public class Main_2606_바이러스_BFS {
 		}
 		
 	} // End of BFS
-	
-	
 } // End of class
