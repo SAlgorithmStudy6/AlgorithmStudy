@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main_2583_영역구하기 {
+public class Main_2583_영역_구하기_BFS {
 	static int arr[][];
 	static boolean visit[][];
 	static List<Integer> resultList = new ArrayList<>();
@@ -11,6 +11,16 @@ public class Main_2583_영역구하기 {
 	static int N, M;
 	static int nowX, nowY;
 	static int areaCount = 0;
+	
+	static class Node{
+		int x;
+		int y;
+		
+		public Node(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	} // End of Node class
 	
 	public static void main(String[] args) throws Exception {
 		System.setIn(new FileInputStream("res/2583.txt"));
@@ -43,8 +53,8 @@ public class Main_2583_영역구하기 {
 		for(int i=0; i<N; i++) {
 			for(int j=0; j<M; j++) {
 				if(!visit[i][j] && arr[i][j] == 0) {
-					areaCount = 0;
-					DFS(i, j);
+					areaCount = 1;
+					BFS(i, j);
 					resultList.add(areaCount);
 				}
 			}
@@ -59,19 +69,26 @@ public class Main_2583_영역구하기 {
 		bw.write(sb.toString()); bw.close();
 	} // End of main
 	
-	private static void DFS(int x, int y) {
+	private static void BFS(int x, int y) {
+		Queue<Node> que = new LinkedList<>();
 		visit[x][y] = true;
-		areaCount++;
+		que.offer(new Node(x,y));
 		
-		for(int i=0; i<4; i++) {
-			nowX = dirX[i] + x;
-			nowY = dirY[i] + y;
+		while(!que.isEmpty()) {
+			Node node = que.poll();
 			
-			if(range_check() && !visit[nowX][nowY] && arr[nowX][nowY] == 0) {
-				DFS(nowX, nowY);
+			for(int i=0; i<4; i++) {
+				nowX = dirX[i] + node.x;
+				nowY = dirY[i] + node.y;
+
+				if(range_check() && !visit[nowX][nowY] && arr[nowX][nowY] == 0) {
+					que.offer(new Node(nowX, nowY));
+					visit[nowX][nowY] = true;
+					areaCount++;
+				}
 			}
 		}
-	} // End of DFS
+	} // End of BFS
 	
 	private static boolean range_check() {
 		return nowX >= 0 && nowX < N && nowY >= 0 && nowY < M;
