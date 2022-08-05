@@ -1,3 +1,3 @@
 ### 1697 숨바꼭질
 
-![image](https://user-images.githubusercontent.com/41350477/182994323-9e826d2a-6409-4117-ad9f-5359b6cd3f78.png)
+![image](https://user-images.githubusercontent.com/41350477/182994405-860cdac7-76d5-488a-848b-712c18339945.png)
