@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
 class Solution {
 
     static ArrayList<ArrayList<Integer>> map = new ArrayList<>();
@@ -39,12 +38,16 @@ class Solution {
         
         while(!q.isEmpty()) {
             P poll = q.poll();
-            if (poll.now == dest) {
+            if (poll.now ==  dest) {
                 return poll.val;
             }
-            for(int i=0; i<map.get(poll.now).size(); i++) {
+            int map_size = map.get(poll.now).size();
+            for(int i=0; i<map_size; i++) {
                 int next = map.get(poll.now).get(i);
                 if (visited[next] == false) {
+                    if (next == dest){
+                        return poll.val + 1;
+                    }
                     q.add(new P(next, poll.val+1));
                     visited[next] = true;
                 }
@@ -59,6 +62,6 @@ class P{
     P(int now, int val){
         this.now = now;
         this.val = val;
-    }
+    } 
 }
  
