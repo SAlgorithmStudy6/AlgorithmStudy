@@ -6,11 +6,11 @@ import java.util.HashSet;
 // HashSet O(1)
 // TreeSet O(logn) 
 // 성능은 HashSet이 더 좋음
-// 여기서는 Set을 쓰면 시간 초과
+// 여기서는 Set을 쓰면 시간 초과 (인줄 알았으나 그냥 로직이 문제였음)
 
-public class Solution2 {
+public class Solution2_Set사용 {
 	public static void main(String[] args) {
-		Solution2 s = new Solution2();
+		Solution2_Set사용 s = new Solution2_Set사용();
 
 		int topping[] = { 1, 2, 1, 3, 1, 4, 1, 2 };
 		System.out.println(s.solution(topping));
