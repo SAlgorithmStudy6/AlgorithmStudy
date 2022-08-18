@@ -5,11 +5,12 @@
 using namespace std;
 
 int N = 10;
-vector<vector<int>> board(N);
-int paper[] = { 5,5,5,5,5 };
-int minAnswer = INT_MAX;
+vector<vector<int>> board(N); 
+int paper[] = { 5,5,5,5,5 }; //»öÁ¾ÀÌÀÇ °³¼ö¸¦ ÀúÀåÇÏ´Â º¯¼ö 
+int minAnswer = INT_MAX; //ºÙ¿©¾ßÇÒ ÃÖ¼Ò °³¼ö
 
-bool checkPaper(int x, int y, int count) {
+//count Å©±âÀÇ »öÁ¾ÀÌ¸¦ ºÙÀÏ¼ö ÀÖ´ÂÁö È®ÀÎ
+bool checkPaper(int x, int y, int count) { 
 	for (int i = 0; i < count; i++) {
 		for (int k = 0; k < count; k++) {
 			if (board[x + i][y + k] == 0) {
@@ -20,6 +21,7 @@ bool checkPaper(int x, int y, int count) {
 	return true;
 }
 
+//x,y ºÎÅÍ count Å©±âÀÇ »öÁ¾ÀÌ¸¦ ºÙÀÌ°Å³ª ¶§°Å³ª (flag = 0 : ¶« / flag = 1 : ºÙÀÓ)
 void changeBoard(int x, int y, int count, int flag) {
 	for (int i = 0; i < count; i++) {
 		for (int k = 0; k < count; k++) {
@@ -29,17 +31,17 @@ void changeBoard(int x, int y, int count, int flag) {
 }
 
 void dfs(int x,int y, int answer) {
-	if (minAnswer <= answer) { //ê°€ì§€ì¹˜ê¸°
+	if (minAnswer <= answer) { //°¡ÁöÄ¡±â
 		return;
 	}
-	bool find = false;
+	bool find = false; //board°¡ 1ÀÎ °ÍÀ» Ã£¾Ò´ÂÁö
 	for (; x < N; x++) {
 		for (; y < N; y++) {
-			if (board[x][y] == 1) {
+			if (board[x][y] == 1) { //Ã£À½
 				find = true;
 				break;
 			}
-			if (x == N - 1 && y == N - 1) {
+			if (x == N - 1 && y == N - 1) { //³¡¿¡ µµ´Ş -> minAnswer°»½Å
 				minAnswer = min(minAnswer, answer);
 				return;
 			}
@@ -47,27 +49,30 @@ void dfs(int x,int y, int answer) {
 		if (find) break;
 		y = 0;
 	}
-	for (int t = 5; t > 0; t--) {
-		if (x + t > N || y + t > N || paper[t - 1] == 0) continue; //ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ë©´
-		if (checkPaper(x, y, t)) { //ë˜ëŠ”ì§€ í™•ì¸
-			paper[t - 1]--;
-			changeBoard(x, y, t, 0);
-			dfs(x, y, answer + 1);
-			changeBoard(x, y, t, 1);
-			paper[t - 1]++;
+	for (int t = 5; t > 0; t--) { //5ºÎÅÍ 1±îÁö °¡´ÉÇÑ »öÁ¾ÀÌ Ã£±â
+		//¹üÀ§¸¦ ¹ş¾î³ª°Å³ª Á¾ÀÌ°¡ ¾øÀ»¶§
+		if (x + t > N || y + t > N || paper[t - 1] == 0) continue;
+		if (checkPaper(x, y, t)) { //µÇ´ÂÁö È®ÀÎ
+			paper[t - 1]--; //»öÁ¾ÀÌ »ç¿ë
+			changeBoard(x, y, t, 0); //»öÁ¾ÀÌ ºÙÀÌ±â
+			dfs(x, y, answer + 1); //Å½»ö
+			changeBoard(x, y, t, 1); //»öÁ¾ÀÌ ¶§±â
+			paper[t - 1]++; //»öÁ¾ÀÌ º¹±¸
 		}
 	}
 }
 
 int main() {
+	//ÀÔ·Â
 	for (int i = 0; i < N; i++) {
 		for (int k = 0; k < N; k++) {
 			int input; cin >> input;
 			board[i].push_back(input);
 		}
 	}
+	//½ÃÀÛ
 	dfs(0,0,0);
-	if (minAnswer == INT_MAX) {
+	if (minAnswer == INT_MAX) { // ºÒ°¡´É ÇÑ °æ¿ì
 		cout << -1 << endl;
 	}
 	else {
