@@ -13,9 +13,7 @@ def solution(ingredient):
     answer = 0
     stack = []
     for element in ingredient:
-        if not stack and element==1 : stack.append(element)
-        if stack :
-            stack.append(element)
-            if element==1 and checkIsHamburger(stack):
-                answer += 1
+        stack.append(element)
+        if element == 1 and checkIsHamburger(stack):
+            answer += 1
     return answer
