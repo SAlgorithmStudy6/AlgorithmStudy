@@ -1,7 +1,5 @@
 # 08.25(목)
 
-17471 게리맨더링
-https://www.acmicpc.net/problem/17471
-
-17472 다리 만들기 2
-https://www.acmicpc.net/problem/17472
+1. https://www.acmicpc.net/problem/14889 스타트와 링크
+2. https://www.acmicpc.net/problem/14501 퇴사
+3. https://www.acmicpc.net/problem/14502 연구소
