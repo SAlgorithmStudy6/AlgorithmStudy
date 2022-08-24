@@ -5,7 +5,7 @@ import java.util.*;
 public class Main_14501_퇴사 {
     static int[][] arr;
     static int N;
-    static int max = -1;
+    static int result = -1;
 
     public static void main(String[] args) throws Exception {
         System.setIn(new FileInputStream("res/14501.txt"));
@@ -19,19 +19,19 @@ public class Main_14501_퇴사 {
             arr[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        DP(0, 0);
-        System.out.println(max);
+        quit(0, 0);
+        System.out.println(result);
     } // End of main
 
-    private static void DP(int depth, int total) {
-        if (depth == N) {
-            max = Math.max(max, total);
+    private static void quit(int day, int totalPrice) {
+        if (day == N) {
+            result = Math.max(result, totalPrice);
             return;
-        } else if (depth > N) {
+        } else if (day > N) {
             return;
         }
 
-        DP(depth + 1, total);
-        DP(depth + arr[depth][0], total + arr[depth][1]);
+        quit(day + 1, totalPrice); // depth는 날짜를 의미하는데, 해당 날짜에 상담을 하지 않고, 넘기는 경우의 수
+        quit(day + arr[day][0], totalPrice + arr[day][1]); // 해당 날짜에 상담을 진행하는 경우의 수
     } // End of DP
 } // End of Main class
