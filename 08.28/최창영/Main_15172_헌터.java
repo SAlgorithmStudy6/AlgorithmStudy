@@ -34,42 +34,6 @@ public class Main_15172_헌터 {
         }
     } // End of Coordinates class
 
-    static class HunterCoordinates {
-        int x;
-        int y;
-        int totalDist;
-
-        public HunterCoordinates(int x, int y, int totalDist) {
-            this.x = x;
-            this.y = y;
-            this.totalDist = totalDist;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-
-        public int getTotalDist() {
-            return totalDist;
-        }
-
-        public void setTotalDist(int totalDist) {
-            this.totalDist = totalDist;
-        }
-    } // End of HunterCoordinates class
-
     public static void main(String[] args) throws Exception {
         System.setIn(new FileInputStream("res/15172.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -118,18 +82,13 @@ public class Main_15172_헌터 {
     // 배열의 0번째는 무조건 몬스터가 들어와야 하고, 고객을 방문할 때는 해당 몬스터를 방문한 후에 고객을 방문할 수 있음
     private static void DFS(int depth, int depthLimit) { // 방문 순서를 조합하는 백트래킹
         if (depth == depthLimit) {
-            HunterCoordinates hunter = new HunterCoordinates(0, 0, 0); // 첫 번째 사냥꾼의 시작 위치는 항상 0, 0 거리도 0
+            Coordinates hunter = new Coordinates(0, 0, 0); // 첫 번째 사냥꾼의 시작 위치는 항상 0, 0 거리도 0
 
             int count = 0;
             for (int i = 0; i < totalCount; i++) {
                 int num = orderArr[i];
-                if (i == 0) {
-                    hunter = BFS(hunter.getX(), hunter.getY(), num, hunter.getTotalDist());
-                    count += hunter.getTotalDist();
-                } else {
-                    hunter = BFS(hunter.getX(), hunter.getY(), num, hunter.getTotalDist());
-                    count += hunter.getTotalDist();
-                }
+                hunter = BFS(hunter.x, hunter.y, num, hunter.dist);
+                count += hunter.dist;
             }
 
             copy(); // 배열 다시 원상 복귀
@@ -160,11 +119,10 @@ public class Main_15172_헌터 {
 
             isVisited[i] = false;
         }
-
     } // End of DFS
 
-    private static HunterCoordinates BFS(int x, int y, int target, int totalDist) {
-        HunterCoordinates hunter = new HunterCoordinates(x, y, totalDist);
+    private static Coordinates BFS(int x, int y, int target, int totalDist) {
+        Coordinates hunter = new Coordinates(x, y, totalDist);
 
         if (tempMap[x][y] == target) {
             tempMap[x][y] = 0;
@@ -188,9 +146,9 @@ public class Main_15172_헌터 {
                     isVisited[nowX][nowY] = true;
                     if (tempMap[nowX][nowY] == target) {
                         tempMap[nowX][nowY] = 0; // 방문한 타겟들은 0처리
-                        hunter.setTotalDist(dist + 1);
-                        hunter.setX(nowX);
-                        hunter.setY(nowY);
+                        hunter.dist = dist + 1;
+                        hunter.x = nowX;
+                        hunter.y = nowY;
                         return hunter;
                     }
 
