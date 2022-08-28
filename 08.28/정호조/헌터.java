@@ -67,7 +67,7 @@ public class 헌터_A형모의테스트 {
 			if(per[0] < 0) break Loop1;	//처음부터 집 방문이면 함수 종료(다음 단계 못감)
 			if (per[i] < 0) {	//per[i]가 음수일 때(집일때)
 				for (int j = 0; j < i; j++) {
-					if (per[j] == Math.abs(per[i])) {	//앞에서 뽑을 순열 중에 고객의 몬스터가 있는지 확인
+					if (per[j] == Math.abs(per[i])) {	//앞에서 뽑 순열 중에 고객의 몬스터가 있는지 확인
 						check = 1;
 					}
 				}
