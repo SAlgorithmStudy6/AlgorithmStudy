@@ -1,12 +1,22 @@
+import java.awt.Point;
 import java.io.*;
 import java.util.*;
 
-public class Solution {
+public class Solution3 {
 
 	static int N;
-	static int[] card; // 카드 배열
-	static boolean isSorted; // 정렬되어있는지 확인 변수
-	static int count; // 셔플 횟수
+	static int[][] field; // 필드
+	static boolean[] hunted; // 몬스터가 잡혔는지 체크 배열
+	static boolean[] existed; // 몬스터가 존재하는지 체크 배열
+	static int[][] customers; // 고객 좌표
+	static int[][] monsters; // 몬스터 좌표
+	static int[] dx = { 0, 0, -1, 1 }; // 좌표이동
+	static int[] dy = { -1, 1, 0, 0 };
+	static int hunterX; // 헌터의 x좌표
+	static int hunterY; // 헌터의 y좌표
+	static List<Integer> list; // 몬스터 + 고객 리스트
+	static boolean[] checked; // 순열 조합 체크 배열
+	static int minTime; // 최소 시간
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,36 +26,47 @@ public class Solution {
 
 		for (int tc = 1; tc <= T; tc++) {
 			N = Integer.parseInt(br.readLine());
-			card = new int[N + 1]; // 카드
-			StringTokenizer token = new StringTokenizer(br.readLine());
+			field = new int[N + 1][N + 1];
+			monsters = new int[5][2];
+			existed = new boolean[5];
+			list = new ArrayList();
+			customers = new int[5][2];
+			int size = 0; // 최대 크기 ex 몬스터가 1,2 있으면 최대크기 2 * 2 = 4
+
 			for (int i = 1; i <= N; i++) {
-				card[i] = Integer.parseInt(token.nextToken());
-			}
+				StringTokenizer token = new StringTokenizer(br.readLine());
+				for (int j = 1; j <= N; j++) {
+					field[i][j] = Integer.parseInt(token.nextToken());
 
-			isSorted = false;
-			count = 0;
+					if (field[i][j] != 0) {
+						size = Math.max(size, Math.abs(field[i][j]));
+						if (field[i][j] < 0) { // 고객좌표
+							customers[Math.abs(field[i][j])][0] = i;
+							customers[Math.abs(field[i][j])][1] = j;
+							list.add(field[i][j]);
 
-			// 0번일 경우 정렬체크
-			sortCheck(card);
-			reverseCheck(card);
-
-			if (isSorted) { // 정렬되어있다면 바로 셔플
-				bw.write("#" + String.valueOf(tc) + " " + String.valueOf(count) + "\n");
-			} else { // 아니라면 셔플 시작
-				for (int i = 1; i <= 5; i++) {
-					int[] order = new int[i];
-					combination(0, i, order);
-					if (isSorted) { // 정렬되어있다면 반복문 종료
-						break;
+						} else { // 몬스터 좌표
+							monsters[field[i][j]][0] = i;
+							monsters[field[i][j]][1] = j;
+							existed[field[i][j]] = true; // 몬스터 존재 체크
+							list.add(field[i][j]);
+						}
 					}
-				}
-				if (isSorted) {
-					bw.write("#" + String.valueOf(tc) + " " + String.valueOf(count) + "\n");
-				} else {
-					bw.write("#" + String.valueOf(tc) + " -1\n");
+
 				}
 			}
 
+			hunted = new boolean[5];
+
+			int orderSize = size * 2; // 순열 크기
+
+			minTime = Integer.MAX_VALUE;
+
+			checked = new boolean[list.size()];
+			int[] order = new int[orderSize];
+			combination(0, orderSize, order); // 헌팅시작
+
+			bw.write("#" + String.valueOf(tc) + " " + String.valueOf(minTime) + "\n");
 		}
 		bw.flush();
 		bw.close();
@@ -53,106 +74,105 @@ public class Solution {
 	}
 
 	static void combination(int index, int size, int[] order) {
-
-		if (isSorted) { // 정렬되어있다면 함수 종료
-			return;
-		}
-
-		if (index == size) { // 셔플 순서 정해지면 셔플하기
-			shuffle(order);
-			if (isSorted) {
-				count = index;
-			}
-			return;
-		}
-
-		for (int i = 1; i <= N - 1; i++) {
-			order[index] = i;
-			combination(index + 1, size, order);
-		}
-	}
-
-	static void shuffle(int[] order) {
-		int temp[] = new int[N + 1]; // 임시배열 초기화
-		copy(temp);
-
-		for (int i = 0; i < order.length; i++) {
-			int start = N / 2; // 셔플 위치
-			if (order[i] < start) { // 123 | 456 순서일 때
-				for (int j = 1; j <= order[i]; j++) { // order[i]만큼 반복
-					start = start - j + 1; // 셔플 인덱스
-					for (int k = 1; k <= j; k++) { // 셔플이 끝나면 다음 셔플할 때 시작점이 +2인 인덱스 셔플
-						swap(start, start + 1, temp);
-						start += 2;
-					}
-					start = N / 2; // order[i]번인 셔플이 끝나면 start 변수 초기화
-				}
-			} else { // 456 | 123 순일때
-				if (order[i] == N - 1) { // order[i]가 N-1일 때
-					rCopy(temp); // 역순 배열 초기화
-				} else {
-					rCopy(temp);
-					for (int j = 1; j <= N - 1 - order[i]; j++) { // 역순으로 정렬한 후에 위에 반복문 로직과 같음
-						start = start - j + 1;
-						for (int k = 1; k <= j; k++) {
-							swap(start, start + 1, temp);
-							start += 2;
+		if (index == size) {
+			int time = 0;
+			hunterX = 1;
+			hunterY = 1;
+			for (int i = 0; i < order.length; i++) {
+				if (order[i] < 0) { //방문 좌표가 고객일 때
+					for (int j = 1; j < customers.length; j++) {
+						if (j == Math.abs(order[i])) { 
+							int x = Math.abs(hunterX - customers[j][1]); //x 거리
+							int y = Math.abs(hunterY - customers[j][0]); //y 거리
+							time += x + y; //시간은 현재 헌터 위치에서 목표 위치까지의 거리
+							hunterX = customers[j][1]; //헌터 위치 갱신
+							hunterY = customers[j][0];
 						}
-						start = N / 2;
+					}
+				} else {
+					for (int j = 1; j < monsters.length; j++) {
+						if (j == order[i]) {//방문 좌표가 몬스터일 때
+							int x = Math.abs(hunterX - monsters[j][1]);
+							int y = Math.abs(hunterY - monsters[j][0]);
+							time += x + y;
+							hunterX = monsters[j][1];
+							hunterY = monsters[j][0];
+						}
+					}
+				}
+				if (time > minTime) { //소요시간이 최소시간보다 길 경우 중간에 빠져나오기
+					break;
+				}
+			}
+			minTime = Math.min(minTime, time);
+			return;
+		}
+
+		for (int i = 0; i < list.size(); i++) {
+			if (index == 0) { //첫번째 방문 타겟 설정
+				if (list.get(i) > 0 || hunted[Math.abs(list.get(i))]) { //몬스터이거나 해당 번호의 몬스터를 잡은 고객의 위치
+					order[index] = list.get(i);
+					checked[i] = true;
+					hunted[Math.abs(list.get(i))] = true;
+					existed[Math.abs(list.get(i))] = false;
+					combination(index + 1, size, order);
+					checked[i] = false;
+					hunted[Math.abs(list.get(i))] = false;
+					existed[Math.abs(list.get(i))] = true;
+				}
+			} else {
+				if (!checked[i]) { //중복 체크
+					if (list.get(i) < 0 && hunted[Math.abs(list.get(i))]) { //해당 번호를 잡은 고객의 위치이면 add
+						order[index] = list.get(i);
+						checked[i] = true;
+						combination(index + 1, size, order);
+						checked[i] = false;
+					} else if (list.get(i) > 0 && existed[list.get(i)]) { //잡히지 않은 몬스터이면 add
+						order[index] = list.get(i);
+						checked[i] = true;
+						hunted[Math.abs(list.get(i))] = true;
+						existed[Math.abs(list.get(i))] = false;
+						combination(index + 1, size, order);
+						checked[i] = false;
+						hunted[Math.abs(list.get(i))] = false;
+						existed[Math.abs(list.get(i))] = true;
 					}
 				}
 			}
 		}
-
-		sortCheck(temp); // 오름차순 정렬인지 확인
-		reverseCheck(temp); // 내림차순 정렬인지 확인
-
 	}
 
-	static void copy(int[] temp) { //원본 복사 배열(깊은 복사)
-		for (int i = 1; i <= N; i++) {
-			temp[i] = card[i];
-		}
-	}
+	static int hunting(int target) { // BFS로 푸는 로직
 
-	static void rCopy(int[] temp) { //123 456 -> 456 123
-		for (int i = 1; i <= N / 2; i++) {
-			swap(i, (N / 2) + i, temp);
-		}
-	}
+		int count = 0;
 
-	static void swap(int a, int b, int[] temp) { //배열 인덱스 교환
-		int temp2 = temp[a];
-		temp[a] = temp[b];
-		temp[b] = temp2;
-	}
+		Queue<Point> queue = new LinkedList();
+		queue.add(new Point(hunterX, hunterY));
 
-	static void sortCheck(int[] arr) { //오름차순 정렬
-		boolean check = true;
-		for (int i = 1; i <= N; i++) {
-			if (arr[i] != i) {
-				check = false;
-				break;
+		boolean[][] visited = new boolean[N + 1][N + 1];
+		visited[hunterY][hunterX] = true;
+
+		while (!queue.isEmpty()) {
+			int qSize = queue.size();
+			for (int j = 0; j < qSize; j++) {
+				Point point = queue.poll();
+				if (field[point.y][point.x] == target) {
+					hunterX = point.x;
+					hunterY = point.y;
+					return count;
+				}
+				for (int k = 0; k < dx.length; k++) {
+					int x = point.x + dx[k];
+					int y = point.y + dy[k];
+
+					if (x >= 1 && x <= N && y >= 1 && y <= N && !visited[y][x]) {
+						visited[y][x] = true;
+						queue.add(new Point(x, y));
+					}
+				}
 			}
+			count++;
 		}
-
-		if (check) {
-			isSorted = true;
-		}
-	}
-
-	static void reverseCheck(int[] arr) { //내림차순 정렬
-		boolean check = true;
-		int rCount = N;
-		for (int i = 1; i <= N; i++) {
-			if (arr[i] != rCount) {
-				check = false;
-				break;
-			}
-			rCount--;
-		}
-		if (check) {
-			isSorted = true;
-		}
+		return count;
 	}
 }
