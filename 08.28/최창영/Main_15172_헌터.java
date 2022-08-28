@@ -91,7 +91,6 @@ public class Main_15172_헌터 {
                 count += hunter.dist;
             }
 
-            copy(); // 배열 다시 원상 복귀
             result = Math.min(result, count);
             return;
         }
@@ -125,7 +124,6 @@ public class Main_15172_헌터 {
         Coordinates hunter = new Coordinates(x, y, totalDist);
 
         if (tempMap[x][y] == target) {
-            tempMap[x][y] = 0;
             return hunter;
         }
 
@@ -145,7 +143,6 @@ public class Main_15172_헌터 {
                 if (rangeCheck(nowX, nowY) && !isVisited[nowX][nowY]) {
                     isVisited[nowX][nowY] = true;
                     if (tempMap[nowX][nowY] == target) {
-                        tempMap[nowX][nowY] = 0; // 방문한 타겟들은 0처리
                         hunter.dist = dist + 1;
                         hunter.x = nowX;
                         hunter.y = nowY;
@@ -171,12 +168,4 @@ public class Main_15172_헌터 {
         allList = new ArrayList<>();
         result = Integer.MAX_VALUE / 4; // 오버플로우 방지
     } // End of init
-
-    private static void copy() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                tempMap[i][j] = map[i][j];
-            }
-        }
-    } // End of copy
 } // End of Main class 
