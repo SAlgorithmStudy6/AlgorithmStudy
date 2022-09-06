@@ -59,8 +59,8 @@ public class Main_2105_디저트_카페 {
             int nowX = x + dirX[i];
             int nowY = y + dirY[i];
 
-            // 시작한 곳으로 돌아오면 중지, 재귀 탈출 조건
-            // counting이 3이상이고, counting이 짝수.
+            //  재귀 탈출 조건
+            // counting이 4이상이고, 시작한 곳으로 돌아오면 중지,
             if (startX == nowX && startY == nowY && counting >= 4) {
                 maxResult = Math.max(maxResult, counting);
                 return;
@@ -71,6 +71,8 @@ public class Main_2105_디저트_카페 {
 
                 isVisited[nowX][nowY] = true;
                 isVisitedDesert[map[nowX][nowY]] = true;
+
+                // 만약 i의 값으로 계속 이동할 수 있으면 계속해서 이동.
                 DFS(startX, startY, nowX, nowY, counting + 1, i);
                 isVisitedDesert[map[nowX][nowY]] = false;
                 isVisited[nowX][nowY] = false;
