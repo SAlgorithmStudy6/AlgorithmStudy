@@ -1,5 +1,5 @@
-# StudyCodes
-<img src="https://user-images.githubusercontent.com/50359789/180629106-e4f83bf5-19c1-4dcd-a727-11bc5aa3bbcb.jpg" width="70%" height="400px" title="Study" alt="Study"></img><br />
+
+<img src="https://user-images.githubusercontent.com/48742378/188807262-23b426d6-f6be-4364-9be8-757094ce9755.jpg" width="70%" height="400px" title="Study" alt="Study"></img><br />
 
 ## Introduction <br />
 - 스터디마다 작성하신 코드를 제출하는 곳입니다.
