@@ -6,8 +6,7 @@ public class Main_2115_벌꿀채취 {
 
     static int[][] arr;
     static boolean[][] isVisited;
-    static int[] beekeeper1;
-    static int[] beekeeper2;
+    static int[] beekeeper;
     static int beekeeper1Max;
     static Deque<Integer> deque;
 
@@ -35,31 +34,25 @@ public class Main_2115_벌꿀채취 {
                 }
             }
 
-            // 가로로 연속되도록 M개의 벌통을 선택
-            // 2명의 일꾼
-            // 2명의 일꾼이 채취할 수 있는 최대양은 C이다.
-
             // 선택된 M개의 벌통에서 값을 조합
             // 조합된 수가 C를 넘지 않도록하기.
             // 부분 조합 만들기 <- 완전탐색
-
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j <= N - M; j++) {
 
                     // 첫번째 양봉업자 조합 만들기.
                     int index = 0;
                     for (int k = j; k < j + M; k++) {
-                        beekeeper1[index] = arr[i][k];
+                        beekeeper[index] = arr[i][k];
                         isVisited[i][k] = true;
                         index++;
                     }
-
 
                     // beekeeper1의 조합으로 최댓값을 찾기.
                     DFS(0, 1, 0);
 
                     // 두번째 양봉 업자 조합 만들기.
-                    madeBekeeper2(i);
+                    madeBekeeper(i);
                 }
             }
 
@@ -70,11 +63,10 @@ public class Main_2115_벌꿀채취 {
         bw.close();
     } // End of main
 
-    private static void madeBekeeper2(int iIndex) { // 양봉업자1이 만든 벌통을 제외하고 양봉업자 2의 벌통을 만드는 메소드
+    private static void madeBekeeper(int iIndex) { // 양봉업자1이 만든 벌통을 제외하고 양봉업자 2의 벌통을 만드는 메소드
         for (int i = iIndex; i < N; i++) {
             for (int j = 0; j <= N - M; j++) {
-
-                // 첫번째 양봉업자가 만든 조합은 지나침.
+                // 첫번째 양봉업자가 만든 조합은 지나치도록 isVisited를 사용
                 if (isVisited[i][j]) {
                     continue;
                 }
@@ -82,7 +74,7 @@ public class Main_2115_벌꿀채취 {
                 // 두번째 양봉업자 조합 만들기.
                 int index = 0;
                 for (int k = j; k < j + M; k++) {
-                    beekeeper2[index] = arr[i][k];
+                    beekeeper[index] = arr[i][k];
                     index++;
                 }
 
@@ -91,7 +83,7 @@ public class Main_2115_벌꿀채취 {
             }
         }
 
-    } // End of madeBeekeeper2
+    } // End of madeBekeeper
 
     private static void DFS(int depth, int beekeeperNum, int index) {
 
@@ -104,10 +96,11 @@ public class Main_2115_벌꿀채취 {
                 total += Math.pow(num, 2);
             }
 
+            // 합이 C를 넘으면 안됨.
             if (sum <= C) {
-                if (beekeeperNum == 1) {
+                if (beekeeperNum == 1) { // 양봉 업자1로 만든 조합에서 최고값을 찾기.
                     beekeeper1Max = Math.max(beekeeper1Max, total);
-                } else {
+                } else { // 양봉업자 1이 만든 최고값과 양봉업자2가 만든조합의 합과 최고값 비교.
                     result = Math.max(beekeeper1Max + total, result);
                 }
             }
@@ -117,17 +110,11 @@ public class Main_2115_벌꿀채취 {
             }
         }
 
+        // 덱을 사용해서 조합을 만듬.
         for (int i = index; i < M; i++) {
-            if (beekeeperNum == 1) { // 양봉업자 1일떄, 최댓값
-                deque.offerLast(beekeeper1[i]);
-                DFS(depth + 1, beekeeperNum, i + 1);
-                deque.pollLast();
-            } else { // 양봉업자 2 최댓값
-                deque.offerLast(beekeeper2[i]);
-                DFS(depth + 1, beekeeperNum, i + 1);
-                deque.pollLast();
-            }
-
+            deque.offerLast(beekeeper[i]);
+            DFS(depth + 1, beekeeperNum, i + 1);
+            deque.pollLast();
         }
     } // End of DFS
 
@@ -135,8 +122,7 @@ public class Main_2115_벌꿀채취 {
         result = Integer.MIN_VALUE;
         arr = new int[N][N];
         isVisited = new boolean[N][N];
-        beekeeper1 = new int[M];
-        beekeeper2 = new int[M];
+        beekeeper = new int[M];
         deque = new LinkedList<>();
         beekeeper1Max = Integer.MIN_VALUE;
     } // End of init
