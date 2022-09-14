@@ -105,6 +105,7 @@ public class Main_2383_점심_식사시간 {
                 // 대기열이 비었으면 진행 X
                 if (s.waitingList.isEmpty()) continue;
 
+                // 대기시간 오름차순으로 정렬
                 Collections.sort(s.waitingList);
 
                 // 대기열이 3이하까지는 상관없음
@@ -114,16 +115,16 @@ public class Main_2383_점심_식사시간 {
                     Deque<Integer> deque = new LinkedList<>();
                     int time = 0;
 
+                    // 먼저 3개를 일단 덱에 탈출시간으로 지정해서 집어넣음.
                     for (int j = 0; j < 3; j++) {
                         deque.offerLast(s.waitingList.remove(0) + s.time);
                     }
 
+                    // 조건에 만족해서 탈출할 때 까지 무한반복
                     for (; ; ) {
-
                         while (!deque.isEmpty() && deque.peekFirst() == time) {
                             deque.pollFirst();
                         }
-
 
                         if (deque.size() < 3) {
                             int dif = 3 - deque.size();
@@ -153,7 +154,6 @@ public class Main_2383_점심_식사시간 {
                             break;
                         }
 
-                        if (time == 100) break;
                         time++;
                     }
 
