@@ -4,7 +4,7 @@ import java.io.*;
 public class Main_5658_보물상자_비밀번호 {
     static int N, K, unitCount, result;
     static char[] chArr;
-    static HashSet<Integer> pwSet;
+    static TreeSet<Integer> pwSet;
 
     // K 번째로 큰 수
     public static void main(String[] args) throws Exception {
@@ -37,21 +37,21 @@ public class Main_5658_보물상자_비밀번호 {
             for (int i = 0; i < unitCount; i++) {
                 for (int j = 0; j < 4; j++) {
                     String temp3 = temp2.substring(j * unitCount, (j * unitCount) + unitCount);
-                    pwSet.add(changeToDecimal(temp3));
+                    pwSet.add(Integer.parseInt(temp3, 16));
                 }
-
                 temp2 = (temp2.substring(1, temp.length())) + temp2.substring(0, 1);
-                //System.out.println("temp2 : " + temp2);
             }
 
-            List<Integer> list = new ArrayList<>();
             Iterator<Integer> iter = pwSet.iterator();
+            int indexCount = 0;
             while (iter.hasNext()) {
-                list.add(iter.next());
+                int num = iter.next();
+                if (indexCount == pwSet.size() - K) {
+                    result = num;
+                    break;
+                }
+                indexCount++;
             }
-
-            Collections.sort(list, Collections.reverseOrder());
-            result = list.get(K-1);
 
             sb.append(result).append('\n');
         }
@@ -60,19 +60,10 @@ public class Main_5658_보물상자_비밀번호 {
         bw.close();
     } // End of main
 
-    private static void DFS() {
-
-    } // End of DFS
-
-    private static int changeToDecimal(String hex) { // 10진수를 16진수로 변환
-        return Integer.parseInt(hex, 16);
-    } // End of changeToDecimal
-
     private static void init() {
         unitCount = N / 4;
         result = 0;
-        pwSet = new HashSet<>();
+        pwSet = new TreeSet<>();
         chArr = new char[N];
-
     } // End of init
 } // End of Main class
