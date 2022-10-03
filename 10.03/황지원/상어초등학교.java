@@ -11,7 +11,7 @@ public class Main {
 	static int n;
 	static int[][] map;
 	static int[] order; // 학생 앉히는 순서
-	static List<Integer>[] list; // 좋아하는 학생 담는 컬렉션
+	static List<Integer>[] list; // 좋아하는 학생 담는 
 	static PriorityQueue<Point> queue = new PriorityQueue<>(); // 정렬 큐
 	static int[] y = { 1, -1, 0, 0 }, x = { 0, 0, 1, -1 };
 
