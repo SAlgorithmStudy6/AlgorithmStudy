@@ -1,4 +1,4 @@
-# 10/26(수)
+# 10/31(월)
 
 ## 백준
 - 보물 : https://www.acmicpc.net/problem/1026
