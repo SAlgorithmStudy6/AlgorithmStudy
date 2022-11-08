@@ -1,7 +1,7 @@
-# 11.07(월) 스터디
+# 11.10(목) 스터디
 
-15685_드래곤_커브
-https://www.acmicpc.net/problem/15685
+17140_이차원 배열과 연산
+https://www.acmicpc.net/problem/17140
 
-배달
-https://school.programmers.co.kr/learn/courses/30/lessons/12978
+멀쩡한 사각형
+https://school.programmers.co.kr/learn/courses/30/lessons/62048
