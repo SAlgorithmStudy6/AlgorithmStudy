@@ -45,8 +45,6 @@ public class 이차원배열과연산_17140 {
 			}
 
 			time++;
-
-			checkRC();
 		}
 
 		System.out.println(ans);
