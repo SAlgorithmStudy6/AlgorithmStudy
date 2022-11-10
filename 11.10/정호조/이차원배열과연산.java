@@ -135,7 +135,7 @@ public class 이차원배열과연산_17140 {
 				arr[i][idx++] = list.get(k).value;
 				arr[i][idx++] = list.get(k).times;
 			}
-			for(int k=idx; k<100; k++) {	//뒤쪽 전부 0으로 만들어줌
+			for(int k=idx; k<C; k++) {	//뒤쪽 전부 0으로 만들어줌
 				arr[i][k] = 0;
 			}
 		}
@@ -183,7 +183,7 @@ public class 이차원배열과연산_17140 {
 				arr[idx++][i] = list.get(k).value;
 				arr[idx++][i] = list.get(k).times;
 			}
-			for(int k=idx; k<100; k++) {
+			for(int k=idx; k<R; k++) {
 				arr[k][i] = 0;
 			}
 		}
