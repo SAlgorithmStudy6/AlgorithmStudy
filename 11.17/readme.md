@@ -1,7 +1,7 @@
-# 11.14(월) 스터디
+# 11.17(목) 스터디
 
-11559_Puyo Puyo
-https://www.acmicpc.net/problem/11559
+17142_연구소 3
+https://www.acmicpc.net/problem/17142
 
-다리를 지나는 트럭
-https://school.programmers.co.kr/learn/courses/30/lessons/42583
+삼각 달팽이
+https://school.programmers.co.kr/learn/courses/30/lessons/68645
