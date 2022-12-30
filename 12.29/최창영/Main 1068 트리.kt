@@ -43,15 +43,17 @@ fun main() {
     // 제거된 노드를 반영하여 자신의 노드 번호를 가지고 있는 노드를 찾는다.
     val isParent = BooleanArray(N)
     for (i in 0 until N) {
-        if (arr[i] == -1 || isVisited[i]) continue // 루트 노드는 통과,
+        if (arr[i] == -1 || isVisited[i]) continue // 루트 노드와, 이미 삭제된 노드는 통과
 
+        // arr[i]의 value가 곧 자신의 부모 노드 번호.
+        // 즉, 자식이 있는 노드가 어떤 노드인지 파악할 수 있음
         isParent[arr[i]] = true
     }
 
     // 둘다 false인 값
     var count = 0
     for (i in 0 until N) {
-        if (isParent[i] == false && isVisited[i] == false) {
+        if (!isParent[i] && !isVisited[i]) {
             count++
         }
     }
