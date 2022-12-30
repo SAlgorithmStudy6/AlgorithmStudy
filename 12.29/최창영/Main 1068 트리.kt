@@ -14,8 +14,8 @@ import java.util.*
 import java.io.*
 
 private var N = 0
-private val arr = IntArray(51)
-private val isVisited = BooleanArray(51)
+private val arr = IntArray(50)
+private val isVisited = BooleanArray(50)
 
 fun main() {
     val path = "C:\\Users\\Samsung\\Desktop\\코틀린 알고리즘\\src\\main\\kotlin\\DFS&BFS 부수기\\res\\1068.txt"
@@ -30,7 +30,6 @@ fun main() {
     }
 
     // 루트 노드는 항상 -1의 값을 가진다.
-
     val deleteNodeNum = br.readLine().toInt()
     // 루트 노드를 제거하면 리프노드는 존재할 수 없다.
     if (arr[deleteNodeNum] == -1) {
@@ -41,17 +40,13 @@ fun main() {
     // 시작하는 노드의 번호 -> 지울 노드의 번호
     DFS(deleteNodeNum)
 
-    // 제거된 노드를 반영해야된다.
+    // 제거된 노드를 반영하여 자신의 노드 번호를 가지고 있는 노드를 찾는다.
     val isParent = BooleanArray(N)
     for (i in 0 until N) {
-        // 자신을 부모로 여기는 값이 없으면 count++
-        val parentNum = arr[i]
-        if(parentNum == -1) continue
+        if (arr[i] == -1 || isVisited[i]) continue // 루트 노드는 통과,
 
-        if(isVisited[i]) continue
-        isParent[parentNum] = true
+        isParent[arr[i]] = true
     }
-
 
     // 둘다 false인 값
     var count = 0
@@ -80,4 +75,3 @@ private fun DFS(startNum: Int) {
         }
     }
 } // End of DFS
-
