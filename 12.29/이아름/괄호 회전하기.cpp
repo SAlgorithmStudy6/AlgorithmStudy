@@ -1,11 +1,13 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <map>
 
 using namespace std;
 
 int solution(string s) {
     int answer = 0;
+    map<char, char> m = { {')','('},{'}','{'},{']','['} };
     for (int i = 0; i < s.size(); i++) {
         stack<char> stacks;
         string str = s.substr(i);
@@ -15,25 +17,13 @@ int solution(string s) {
             if (c == '(' || c == '[' || c == '{') {
                 stacks.push(c);
             }
-            else if (c == ')') {
-                if (stacks.top() == '(') stacks.pop();
-                else {
+            else if (c == ')' || c == '}' || c == ']') {
+                if(stacks.empty() || stacks.top() != m[c]) {
                     flag = false;
                     break;
                 }
-            }
-            else if (c == ']') {
-                if (stacks.top() == '[') stacks.pop();
                 else {
-                    flag = false;
-                    break;
-                }
-            }
-            else if (c == '}') {
-                if (stacks.top() == '{') stacks.pop();
-                else {
-                    flag = false;
-                    break;
+                    stacks.pop();
                 }
             }
         }
