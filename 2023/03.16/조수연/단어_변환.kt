@@ -36,13 +36,13 @@ class Solution {
 
                 for (j in words.indices) {
                     if (!indexList.contains(j)) { // 중복 제거
-                        var count = 0
+                        var diffcnt = 0
                         for (k in changeWord.indices) {
-                            if (changeWord[k] != words[j][k]) count++
-                            if (count > 1) break
+                            if (changeWord[k] != words[j][k]) diffcnt++
+                            if (diffcnt > 1) break
                         }
 
-                        if (count == 1) { // 문자가 하나만 다르면 queue에 add
+                        if (diffcnt == 1) { // 문자가 하나만 다르면 queue에 add
                             indexList.add(j)
                             queue.add(Pair(words[j], indexList))
                         }
