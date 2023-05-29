@@ -29,9 +29,9 @@ fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
     for (i in 0 until N){
        dp[i] = 1
        for (j in 0 until i){
-           if (wireList[j].end < wireList[i].end){ // 다음 전깃줄이 이전의 전깃줄보다 위에 있으면 교차하므로 +1
+           if (wireList[j].end < wireList[i].end){ // 이전의 전깃줄보다 현재 전깃줄의 끝 번호가 더 밑에 있으면 연결할 수 있으니깐 +1
                dp[i] = max(dp[i],dp[j]+1)
-           } // 다음에 나오는 전깃줄 번호가 이전의 전깃줄 번호의 끝보다 밑에 있으면 연결해도 문제 없음
+           }
        }
         maxWire = max(maxWire,dp[i])
     }
