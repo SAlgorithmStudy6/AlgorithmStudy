@@ -55,7 +55,6 @@ public class 축구 {
     }
 }
 
-// 오차가 크다
 /*
 public class 축구 {
     // 적어도 한 팀이 골을 소수로 득점할 확률 = 1 - 두 팀 모두 소수로 득점 못할 확률
@@ -70,7 +69,7 @@ public class 축구 {
             factorials[i] = factorial(i);
         }
 
-        int[] goalList = {0, 1, 6, 8, 9, 10, 12, 14, 15, 16, 18};
+        int[] goalList = {0, 1, 4, 6, 8, 9, 10, 12, 14, 15, 16, 18};
         long[] combi = new long[goalList.length];
 
         for (int i = 0; i < goalList.length; i++) {
