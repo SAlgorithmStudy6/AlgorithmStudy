@@ -1,0 +1,38 @@
+import java.util.*;
+import java.io.*;
+
+
+class Main {
+
+
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        int[] nums = new int[N];
+        long[][] dp = new long[N-1][21]; //0 ~ 20
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        for(int i=0;i<N;i++)
+            nums[i] = Integer.parseInt(st.nextToken());
+
+        //초기
+        dp[0][nums[0]] = 1;
+
+        for(int i=1;i<N-1;i++){
+            for(int j=0;j<=20;j++){
+                if(dp[i-1][j]>0){ //이전값들 중 0~20사이 값이 있는경우
+                    if(j+nums[i]>=0&&j+nums[i]<=20){ //더했을떄 0~20 경우
+                        dp[i][j+nums[i]]+=dp[i-1][j];
+                    }
+                    if(j-nums[i]>=0&&j-nums[i]<=20) { //뻇을떄 0~20
+                        dp[i][j-nums[i]]+=dp[i-1][j];
+                    }
+                }
+            }
+        }
+        System.out.println(dp[dp.length-1][nums[nums.length-1]]);
+    }
+
+}
