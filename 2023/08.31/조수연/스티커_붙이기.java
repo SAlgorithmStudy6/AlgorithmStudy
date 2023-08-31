@@ -5,7 +5,6 @@ public class Main {
     static final int DEGREE = 90;
     static int[][] notebook;
     static int[][] rotateSticker;
-    static List<String> directions;
     static int answer = 0;
 
     public static void main(String[] args) throws Exception {
@@ -33,8 +32,6 @@ public class Main {
                     sticker[j][l] = Integer.parseInt(st.nextToken());
                 }
             }
-
-            directions = new ArrayList<>();
 
             for (int j = 0; j < 4; j++) {
                 rotate(sticker, r, c, DEGREE * j);
