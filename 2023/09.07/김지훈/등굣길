@@ -1,0 +1,43 @@
+import java.util.*;
+import java.io.*;
+
+class Solution {
+    static int[][] dp;
+    static int[] dx={1,0};
+    static int[] dy={0,1};
+    public int solution(int m, int n, int[][] puddles) {
+        int answer = 0;
+        dp = new int[n][m];
+        for(int i=0;i<dp.length;i++){
+            Arrays.fill(dp[i],-1);
+        }
+        answer = dfs(0,0,n-1,m-1,puddles);
+        
+        return answer;
+    }
+    public static int dfs(int x,int y,int endX,int endY,int[][] puddles){
+        if(x==endX&&y==endY)
+            return 1;
+        if(dp[x][y]!=-1) return dp[x][y];
+        dp[x][y] = 0;
+        for(int i=0;i<2;i++){
+            int nx = x+dx[i];
+            int ny = y+dy[i];
+            boolean flag = true;
+            if(nx<0||ny<0||nx>endX||ny>endY) continue;
+            for(int r=0;r<puddles.length;r++){
+                if(puddles[r][0]-1==ny&&puddles[r][1]-1==nx){
+                    flag = !flag;
+                    break;
+                }
+            }
+            //물에 안잠긴 경우에만
+            if(!flag) continue;
+            dp[x][y]+=dfs(nx,ny,endX,endY,puddles);
+            if(dp[x][y]>1000000007)
+                dp[x][y] %=1000000007;
+         }
+        
+        return dp[x][y];
+    }
+}
