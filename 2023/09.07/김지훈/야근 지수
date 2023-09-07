@@ -1,0 +1,24 @@
+import java.io.*;
+import java.util.*;
+
+class Solution {
+    public long solution(int n, int[] works) {
+        long answer = 0;
+        int sum = 0;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((o1,o2)->-(o1-o2));
+        for(int work : works){
+            pq.add(work);
+            sum+=work;
+        }
+        //안해도 되는 경우
+        if(sum-n<=0) return 0;
+        while(n-->0){
+            int top = pq.poll();
+            pq.offer(top-1);
+        }
+        while(!pq.isEmpty()){
+            answer+=Math.pow(pq.poll(),2);
+        }
+        return answer;
+    }
+}
