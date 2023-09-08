@@ -11,13 +11,11 @@ class Test {
 class Solution {
     int[] info;
     int[][] graph;
-    int[] visited;
     int answer = 0;
 
     public int solution(int[] info, int[][] edges) {
         this.info = info.clone();
         graph = new int[info.length][info.length];
-        visited = new int[info.length];
 
         for (int i = 0; i < edges.length; i++) {
             graph[edges[i][0]][edges[i][1]] = 1;
